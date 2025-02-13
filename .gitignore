@@ -1,13 +1,6 @@
-# Ignore Terraform state files
+# Ignore Terraform files
 *.tfstate
 *.tfstate.backup
-
-# Ignore zip files
-*.zip
-
-# Ignore Terraform provider files
 .terraform/
-
-# Ignore other unnecessary files
-*.log
+*.zip
 

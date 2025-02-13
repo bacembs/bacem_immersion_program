@@ -57,7 +57,6 @@ func sendMetrics(resizeTime float64) {
 
 func processImage(bucketName, fileKey string) error {
     startTime := time.Now()
-
     // Get original image
     result, err := s3Client.GetObject(&s3.GetObjectInput{
         Bucket: aws.String(bucketName),
@@ -76,13 +75,11 @@ func processImage(bucketName, fileKey string) error {
 
     // Resize image
     resizedImg := resize.Resize(128, 128, img, resize.Lanczos3)
-
     // Encode to JPEG
     buf := new(bytes.Buffer)
     if err := jpeg.Encode(buf, resizedImg, nil); err != nil {
         return fmt.Errorf("failed to encode image: %w", err)
     }
-
     // Upload thumbnail
     _, err = s3Client.PutObject(&s3.PutObjectInput{
         Bucket: aws.String(thumbnailBucket),
@@ -106,13 +103,11 @@ func lambdaHandler(ctx context.Context, sqsEvent events.SQSEvent) error {
             log.Printf("Error parsing S3 event: %v", err)
             continue
         }
-
         // Skip test events
         if len(s3Event.Records) == 0 {
             log.Println("Received empty S3 event - skipping")
             continue
         }
-
         // Process each record
         for _, record := range s3Event.Records {
             bucket := record.S3.Bucket.Name
