@@ -81,6 +81,11 @@ resource "aws_iam_role_policy" "lambda_policy" {
         Effect = "Allow",
         Action = ["cloudwatch:PutMetricData"],
         Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = ["xray:PutTelemetryRecords", "xray:PutTraceSegments"],
+        Resource = "*"
       }
     ]
   })
@@ -101,6 +106,11 @@ resource "aws_lambda_function" "thumbnail_generator" {
       THUMBNAIL_BUCKET = aws_s3_bucket.thumbnail_bucket.id
     }
   }
+
+  tracing_config {
+    mode = "Active"
+  }
+
 
   depends_on = [
     aws_iam_role_policy.lambda_policy

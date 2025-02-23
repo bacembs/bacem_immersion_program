@@ -10,4 +10,5 @@
 
 # Ignore other unnecessary files
 *.log
-
+bootstrap
+.terraform.lock.hcl
