@@ -93,7 +93,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
 
 # Lambda Function
 resource "aws_lambda_function" "thumbnail_generator" {
-  filename         = "thumbnail_generator.zip"
+  filename         = "../thumbnail_generator.zip"
   function_name    = "${var.project_name}-function"
   role            = aws_iam_role.lambda_role.arn
   handler         = "bootstrap"
